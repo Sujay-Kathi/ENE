@@ -1,37 +1,56 @@
-import { Building2, Bed, HeartPulse, AlertTriangle, TrendingUp, TrendingDown } from 'lucide-react';
-
-const cards = [
-  { label: 'Total Hospitals', value: '69,800', change: '+2.1%', up: true, icon: Building2, variant: 'primary' },
-  { label: 'Total Beds', value: '1.9M', change: '+1.4%', up: true, icon: Bed, variant: 'success' },
-  { label: 'Free ICU Beds', value: '12,400', change: '-5.2%', up: false, icon: HeartPulse, variant: 'warning' },
-  { label: 'Active Alerts', value: '8', change: '+3', up: true, icon: AlertTriangle, variant: 'danger' },
-];
-
 export default function StatsCards({ summary }) {
   const displayCards = summary ? [
-    { ...cards[0], value: (summary.total_hospitals || 69800).toLocaleString() },
-    { ...cards[1], value: ((summary.total_beds || 1900000) / 1000000).toFixed(1) + 'M' },
-    { ...cards[2], value: (summary.total_free_icu || 12400).toLocaleString() },
-    { ...cards[3], value: String(summary.critical_hospitals || 8) },
-  ] : cards;
+    { label: 'Total Hospitals', value: (summary.total_hospitals || 69800).toLocaleString(), icon: 'local_hospital', type: 'normal' },
+    { label: 'Total Beds', value: ((summary.total_beds || 1900000) / 1000000).toFixed(1) + 'M', icon: 'bed', type: 'normal' },
+    { label: 'Free ICU Beds', value: (summary.total_free_icu || 12400).toLocaleString(), icon: 'emergency', type: 'cyan' },
+    { label: 'Active Alerts', value: String(summary.critical_hospitals || 8), icon: 'priority_high', type: 'red' },
+  ] : [
+    { label: 'Total Hospitals', value: '69,800', icon: 'local_hospital', type: 'normal' },
+    { label: 'Total Beds', value: '1.9M', icon: 'bed', type: 'normal' },
+    { label: 'Free ICU Beds', value: '12,400', icon: 'emergency', type: 'cyan' },
+    { label: 'Active Alerts', value: '8', icon: 'priority_high', type: 'red' },
+  ];
 
   return (
-    <div className="stats-grid">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
       {displayCards.map((card, i) => {
-        const Icon = card.icon;
-        return (
-          <div key={i} className={`stat-card ${card.variant} animate-in`}>
-            <div className={`stat-icon ${card.variant}`}>
-              <Icon size={22} />
+        if (card.type === 'cyan') {
+          return (
+            <div key={i} className="glass-panel p-6 rounded-xl border-primary/30 neon-glow-cyan bg-primary-container/5">
+              <p className="font-label-caps text-[12px] font-bold text-primary uppercase mb-2 tracking-widest">{card.label}</p>
+              <div className="flex items-end justify-between">
+                <div className="flex flex-col">
+                  <span className="font-data-lg text-4xl text-primary font-bold">{card.value}</span>
+                  <span className="text-[10px] text-primary/60 font-medium tracking-wider mt-1">REAL-TIME MONITOR</span>
+                </div>
+                <span className="material-symbols-outlined text-primary text-4xl animate-pulse">{card.icon}</span>
+              </div>
             </div>
-            <div className="stat-label">{card.label}</div>
-            <div className="stat-value">{card.value}</div>
-            <span className={`stat-change ${card.up ? 'up' : 'down'}`}>
-              {card.up ? <TrendingUp size={12} /> : <TrendingDown size={12} />}
-              {card.change}
-            </span>
-          </div>
-        );
+          );
+        } else if (card.type === 'red') {
+          return (
+            <div key={i} className="glass-panel p-6 rounded-xl border-secondary-container/50 neon-glow-red bg-secondary-container/10">
+              <p className="font-label-caps text-[12px] font-bold text-secondary uppercase mb-2 tracking-widest">{card.label}</p>
+              <div className="flex items-end justify-between">
+                <div className="flex flex-col">
+                  <span className="font-data-lg text-4xl text-secondary font-bold">{card.value}</span>
+                  <span className="text-[10px] text-secondary/60 font-medium tracking-wider mt-1">IMMEDIATE ATTENTION</span>
+                </div>
+                <span className="material-symbols-outlined text-secondary text-4xl">{card.icon}</span>
+              </div>
+            </div>
+          );
+        } else {
+          return (
+            <div key={i} className="glass-panel p-6 rounded-xl">
+              <p className="font-label-caps text-[12px] font-bold text-on-surface-variant uppercase mb-2 tracking-widest">{card.label}</p>
+              <div className="flex items-end justify-between">
+                <span className="font-data-lg text-4xl text-on-surface font-bold">{card.value}</span>
+                <span className="material-symbols-outlined text-primary/40 text-4xl">{card.icon}</span>
+              </div>
+            </div>
+          );
+        }
       })}
     </div>
   );

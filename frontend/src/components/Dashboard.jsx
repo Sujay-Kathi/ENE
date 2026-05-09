@@ -146,13 +146,13 @@ export default function Dashboard() {
 
   return (
     <div>
-      <div className="page-header">
-        <div className="header-row">
+      <div className="mb-8">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1>🔮 FutureLens Dashboard</h1>
-            <p>Predicting Disease Trends & Hospital Resource Demand — India</p>
+            <h1 className="font-headline-md text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-text-primary to-primary-light">🔮 FutureLens Dashboard</h1>
+            <p className="text-text-muted text-sm mt-1">Predicting Disease Trends & Hospital Resource Demand — India</p>
           </div>
-          <div className="header-controls">
+          <div className="flex gap-3 items-center">
             <select className="select-input" value={city} onChange={e => setCity(e.target.value)}>
               {CITIES.map(c => <option key={c} value={c}>{c}</option>)}
             </select>
@@ -174,21 +174,29 @@ export default function Dashboard() {
 
       <StatsCards summary={summary} />
 
-      <div className="content-grid thirds">
-        <ForecastChart forecast={forecast} disease={disease} loading={loading.forecast} />
-        <RiskGauge icuData={icuData} loading={loading.icu} />
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        <div className="lg:col-span-2 glass-panel rounded-xl flex flex-col h-full">
+          <ForecastChart forecast={forecast} disease={disease} loading={loading.forecast} />
+        </div>
+        <div className="glass-panel rounded-xl flex flex-col h-full">
+          <RiskGauge icuData={icuData} loading={loading.icu} />
+        </div>
       </div>
 
-      <div className="content-grid">
-        <HospitalMap mapData={mapData} loading={loading.map} />
-        <AlertPanel alerts={alerts} loading={loading.alerts} />
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        <div className="lg:col-span-2 glass-panel rounded-xl overflow-hidden relative">
+          <HospitalMap mapData={mapData} loading={loading.map} />
+        </div>
+        <div className="glass-panel rounded-xl flex flex-col h-full">
+          <AlertPanel alerts={alerts} loading={loading.alerts} />
+        </div>
       </div>
 
       {/* Feature Importance */}
-      <div className="content-grid" style={{ marginTop: '0' }}>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="glass-card">
-          <div className="glass-card-header">
-            <span className="glass-card-title">XGBoost Feature Importance</span>
+          <div className="glass-card-header mb-4 flex justify-between items-center">
+            <span className="font-label-caps text-[12px] font-bold text-text-muted tracking-widest uppercase">XGBoost Feature Importance</span>
             {icuData?.model_metrics && (
               <div style={{ display: 'flex', gap: '16px' }}>
                 <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>MAE: <strong style={{ color: 'var(--success)' }}>{icuData.model_metrics.mae}</strong></span>
