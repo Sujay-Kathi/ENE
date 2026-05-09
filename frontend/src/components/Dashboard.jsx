@@ -106,12 +106,13 @@ export default function Dashboard() {
   const loadData = async () => {
     setLoading({ forecast: true, icu: true, summary: true, alerts: true, map: true });
     try {
-      const [f, icu, sum, al, map] = await Promise.all([
+      const [f, icu, sum, al, map, featsRes] = await Promise.all([
         fetchDiseaseTrend(city, disease, days).catch(() => null),
         fetchICUDemand(city, 14).catch(() => null),
         fetchHospitalSummary().catch(() => null),
         fetchAlerts(city, disease, 14).catch(() => null),
         fetchMapData().catch(() => null),
+        fetchFeatureImportance().catch(() => null),
       ]);
 
       if (!f && !icu && !sum) {
@@ -128,6 +129,7 @@ export default function Dashboard() {
         setSummary(sum || { total_hospitals: 69800, total_beds: 1900000, total_free_icu: 12400, critical_hospitals: 8 });
         setAlerts(al || generateFallbackAlerts());
         setMapData(map || generateFallbackMap());
+        if (featsRes) setFeatures(featsRes);
       }
     } catch {
       setUseFallback(true);
@@ -197,16 +199,21 @@ export default function Dashboard() {
           </div>
           {(() => {
             const feats = features || {
-              month: 0.15, day_of_week: 0.08, temperature: 0.14, humidity: 0.11,
-              rainfall_mm: 0.13, is_festival: 0.07, admissions_lag1: 0.12,
-              admissions_lag7: 0.08, admissions_rolling7: 0.07, icu_lag1: 0.05,
+              base_cases: 0.25, weekday: 0.12, weekly_pattern: 0.08, month: 0.15,
+              seasonal_spike: 0.10, dengue_cases: 0.15, temperature: 0.05,
+              rainfall: 0.05, total_cases: 0.05
             };
             const maxVal = Math.max(...Object.values(feats));
             const labels = {
-              month: 'Month', day_of_week: 'Day of Week', temperature: 'Temperature',
-              humidity: 'Humidity', rainfall_mm: 'Rainfall (mm)', is_festival: 'Festival Day',
-              admissions_lag1: 'Admissions (1-day lag)', admissions_lag7: 'Admissions (7-day lag)',
-              admissions_rolling7: 'Rolling 7-day Avg', icu_lag1: 'ICU Admissions (1-day lag)',
+              base_cases: 'Base Admission Count',
+              weekday: 'Day of Week',
+              weekly_pattern: 'Weekend/Weekday Pattern',
+              month: 'Month of Year',
+              seasonal_spike: 'Seasonal Outbreak Factor',
+              dengue_cases: 'Dengue Co-infection',
+              temperature: 'Temperature',
+              rainfall: 'Rainfall (mm)',
+              total_cases: 'Total Combined Cases',
             };
             return Object.entries(feats)
               .sort(([, a], [, b]) => b - a)
