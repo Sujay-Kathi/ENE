@@ -3,39 +3,39 @@
 /* ===== CSS DESIGN SYSTEM — FutureLens ===== */
 :root {
   /* Colors */
-  --bg-canvas: #0b1326;
-  --bg-surface: #131b2e;
-  --bg-surface-container: #171f33;
-  --bg-surface-high: #222a3d;
-  --bg-surface-highest: #2d3449;
-  --bg-glass: rgba(30, 41, 59, 0.7);
-  --bg-glass-hover: rgba(30, 41, 59, 0.85);
+  --bg-canvas: #0c1322;
+  --bg-surface: #191f2f;
+  --bg-surface-container: #141b2b;
+  --bg-surface-high: #232a3a;
+  --bg-surface-highest: #2e3545;
+  --bg-glass: rgba(12, 19, 34, 0.75);
+  --bg-glass-hover: rgba(12, 19, 34, 0.9);
 
-  --primary: #0ea5e9;
-  --primary-light: #89ceff;
-  --primary-dim: #004c6e;
-  --secondary: #7bd0ff;
-  --tertiary: #3cddc7;
-  --tertiary-container: #00af9d;
+  --primary: #22d3ee;
+  --primary-light: #8aebff;
+  --primary-dim: #005763;
+  --secondary: #ffb2b7;
+  --tertiary: #d8daff;
+  --tertiary-container: #b50036;
 
-  --text-primary: #dae2fd;
-  --text-secondary: #bec8d2;
-  --text-muted: #88929b;
-  --text-on-primary: #00344d;
+  --text-primary: #dce2f7;
+  --text-secondary: #bbc9cd;
+  --text-muted: #859397;
+  --text-on-primary: #001f25;
 
   --success: #10b981;
   --warning: #f59e0b;
   --danger: #ef4444;
-  --critical: #ff4757;
+  --critical: #ffb2b7;
 
-  --border: rgba(255, 255, 255, 0.08);
-  --border-glow: rgba(14, 165, 233, 0.25);
-  --outline: #3e4850;
+  --border: rgba(255, 255, 255, 0.05);
+  --border-glow: rgba(34, 211, 238, 0.2);
+  --outline: #3c494c;
 
   /* Shadows & Glows */
-  --glow-primary: 0 0 20px rgba(14, 165, 233, 0.15);
-  --glow-strong: 0 0 30px rgba(14, 165, 233, 0.25);
-  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.3);
+  --glow-primary: 0 0 15px rgba(34, 211, 238, 0.2);
+  --glow-strong: 0 0 25px rgba(34, 211, 238, 0.3);
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
 
   /* Spacing */
   --space-1: 4px;
