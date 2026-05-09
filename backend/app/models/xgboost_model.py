@@ -20,7 +20,7 @@ class ICUDemandPredictor:
     def __init__(self):
         self.occupancy_model = None
         self.crisis_model = None
-        self.custom_model_path = r"C:\Users\sujay\HACKATHON\icu_model.pkl"
+        self.custom_model_path = r"C:\Users\sujay\HACKATHON\backend\icu_model_multi.pkl"
         
         if os.path.exists(self.custom_model_path):
             print(f"Loading custom ICU model from {self.custom_model_path}")
