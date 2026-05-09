@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './index.css';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
+import Chatbot from './components/Chatbot';
 
 function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -39,6 +40,8 @@ function App() {
         {activeTab === 'hospitals' && <Dashboard />}
         {activeTab === 'alerts' && <Dashboard />}
       </main>
+
+      <Chatbot />
     </>
   );
 }
