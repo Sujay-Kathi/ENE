@@ -1,12 +1,12 @@
 export default function StatsCards({ summary }) {
   const displayCards = summary ? [
     { label: 'Total Hospitals', value: (summary.total_hospitals || 69800).toLocaleString(), icon: 'local_hospital', type: 'normal' },
-    { label: 'Total Beds', value: ((summary.total_beds || 1900000) / 1000000).toFixed(1) + 'M', icon: 'bed', type: 'normal' },
+    { label: 'Total Beds', value: (summary.total_beds || 1900000).toLocaleString(), icon: 'bed', type: 'normal' },
     { label: 'Free ICU Beds', value: (summary.total_free_icu || 12400).toLocaleString(), icon: 'emergency', type: 'cyan' },
     { label: 'Active Alerts', value: String(summary.critical_hospitals || 8), icon: 'priority_high', type: 'red' },
   ] : [
     { label: 'Total Hospitals', value: '69,800', icon: 'local_hospital', type: 'normal' },
-    { label: 'Total Beds', value: '1.9M', icon: 'bed', type: 'normal' },
+    { label: 'Total Beds', value: '1,900,000', icon: 'bed', type: 'normal' },
     { label: 'Free ICU Beds', value: '12,400', icon: 'emergency', type: 'cyan' },
     { label: 'Active Alerts', value: '8', icon: 'priority_high', type: 'red' },
   ];
