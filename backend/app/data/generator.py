@@ -242,20 +242,20 @@ def save_generated_data():
     data_dir = os.path.join(os.path.dirname(__file__), "processed")
     os.makedirs(data_dir, exist_ok=True)
     
-    print("🏥 Generating daily admissions data (2 years)...")
+    print("[DATA] Generating daily admissions data (2 years)...")
     admissions_df = generate_daily_admissions(days=730)
     admissions_path = os.path.join(data_dir, "daily_admissions.csv")
     admissions_df.to_csv(admissions_path, index=False)
-    print(f"   ✅ Saved {len(admissions_df)} records to {admissions_path}")
+    print(f"   [OK] Saved {len(admissions_df)} records to {admissions_path}")
     
-    print("🏥 Generating hospital registry...")
+    print("[DATA] Generating hospital registry...")
     registry_df = generate_hospital_registry()
     registry_path = os.path.join(data_dir, "hospital_registry.csv")
     registry_df.to_csv(registry_path, index=False)
-    print(f"   ✅ Saved {len(registry_df)} hospitals to {registry_path}")
+    print(f"   [OK] Saved {len(registry_df)} hospitals to {registry_path}")
     
     # Aggregate daily data for Prophet (city + disease level)
-    print("📊 Creating aggregated time series...")
+    print("[DATA] Creating aggregated time series...")
     agg_df = admissions_df.groupby(["date", "city", "disease"]).agg({
         "admissions": "sum",
         "icu_admissions": "sum",
@@ -269,7 +269,7 @@ def save_generated_data():
     
     agg_path = os.path.join(data_dir, "aggregated_timeseries.csv")
     agg_df.to_csv(agg_path, index=False)
-    print(f"   ✅ Saved aggregated data to {agg_path}")
+    print(f"   [OK] Saved aggregated data to {agg_path}")
     
     return admissions_df, registry_df, agg_df
 

@@ -47,35 +47,35 @@ async def startup():
     reg_path = os.path.join(DATA_DIR, "hospital_registry.csv")
 
     if os.path.exists(adm_path):
-        print("📂 Loading existing admissions data...")
+        print("[DATA] Loading existing admissions data...")
         admissions_data = pd.read_csv(adm_path)
     else:
-        print("🏥 Generating synthetic admissions data...")
+        print("[DATA] Generating synthetic admissions data...")
         admissions_data = generate_daily_admissions(days=730)
         admissions_data.to_csv(adm_path, index=False)
-        print(f"   ✅ Generated {len(admissions_data)} records")
+        print(f"   [OK] Generated {len(admissions_data)} records")
 
     if os.path.exists(reg_path):
-        print("📂 Loading existing hospital registry...")
+        print("[DATA] Loading existing hospital registry...")
         hospital_registry = pd.read_csv(reg_path)
     else:
-        print("🏥 Generating hospital registry...")
+        print("[DATA] Generating hospital registry...")
         hospital_registry = generate_hospital_registry()
         hospital_registry.to_csv(reg_path, index=False)
-        print(f"   ✅ Generated {len(hospital_registry)} hospitals")
+        print(f"   [OK] Generated {len(hospital_registry)} hospitals")
 
     # Train models
-    print("🔮 Training disease trend models...")
+    print("[ML] Training disease trend models...")
     cities = ["Mumbai", "Delhi", "Bengaluru", "Chennai", "Kolkata"]
     diseases = ["dengue", "flu", "covid"]
     for city in cities:
         for disease in diseases:
             disease_predictor.train(admissions_data, city, disease)
-    print("   ✅ Disease models ready")
+    print("   [OK] Disease models ready")
 
-    print("📊 Training ICU demand model...")
+    print("[ML] Training ICU demand model...")
     icu_predictor.train(admissions_data)
-    print(f"   ✅ ICU model ready | Metrics: {icu_predictor.metrics}")
+    print(f"   [OK] ICU model ready | Metrics: {icu_predictor.metrics}")
 
 
 # Register routes
